@@ -16,7 +16,8 @@ echo "Docker-entrypoint.sh is running ..."
 
 # Start Apache
 #/usr/sbin/apache2 -k start -d '/etc/apache2' -f '/etc/apache2/sites-enabled/default-ssl.conf'
-service apache2 start
+#service apache2 start
+apachectl start
 
 # Open ports
 netstat -tulpen | grep -v 127.0.0.1 
