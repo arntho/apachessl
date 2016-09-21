@@ -16,6 +16,14 @@ RUN chmod -f 777 /tmp/docker-entrypoint.sh
 
 # default Apache-SSL configuration
 COPY default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
 COPY ports.conf /etc/apache2/ports.conf
+
+
+
+# Activate SSL-Module 
+RUN a2enmod ssl
+RUN a2ensite default-ssl.conf
 
 ENTRYPOINT ["/tmp/docker-entrypoint.sh"]

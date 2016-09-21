@@ -14,13 +14,11 @@ echo "Docker-entrypoint.sh is running ..."
 # Create configuration
 #sudo /opt/sevenval/fit14/bin/fitadmin config generate
 
-
-# Modify listen.conf
-#echo 'Listen *:8080 http' > /opt/sevenval/fit14/conf/include/listen.conf
-
-
 # Start Apache
+#/usr/sbin/apache2 -k start -d '/etc/apache2' -f '/etc/apache2/sites-enabled/default-ssl.conf'
 service apache2 start
 
+# Open ports
+netstat -tulpen | grep -v 127.0.0.1 
 
 bash
