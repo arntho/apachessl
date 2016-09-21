@@ -22,15 +22,14 @@ COPY apache.crt /etc/ssl/apache.crt
 COPY apache.key /etc/ssl/apache.key
 
 # Activate SSL-Module 
-RUN a2enmod ssl
-RUN a2ensite default-ssl.conf
+RUN a2enmod ssl && a2ensite default-ssl.conf
 
 
-RUN chgrp -R root /var/lib/apache2 && chmod -R g+w /var/lib
-RUN chgrp -R root /var/log/apache2 && chmod -R g+w /var/log
-RUN chgrp -R root /var/cache/apache2 && chmod -R g+w /var/cache
-RUN chgrp -R root /var/run && chmod -R g+w /var/run
-RUN chgrp -R root /var/lock && chmod -R g+w /var/lock
+RUN chgrp -R root /var/lib/apache2 && chmod -R g+w /var/lib/apache2 && \
+	chgrp -R root /var/log/apache2 && chmod -R g+w /var/log/apache2 && \
+	chgrp -R root /var/cache/apache2 && chmod -R g+w /var/cache/apache2
+
+RUN mkdir -p /var/run/apache2 && chgrp -R root /var/run/apache2 && chmod -R g+w /var/run/apache2
 
 #RUN chmod -R 777 /var/run/apache2
 
@@ -38,7 +37,7 @@ RUN adduser apachetest --gecos ""  --disabled-password
 RUN usermod -aG root apachetest
 
 RUN rm -rf /var/lock
-RUN mkdir /var/lock && chown root.root /var/lock && chmod 777 /var/lock
+RUN mkdir -p /var/lock/apache2 && chown root.root /var/lock/apache2 && chmod 777 /var/lock/apache2
 
 RUN /usr/sbin/apachectl configtest
 
